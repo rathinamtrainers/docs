@@ -1,0 +1,47 @@
+---
+title: "Authentication Overview for LearnFlow Learners"
+sidebarTitle: "Overview"
+description: "Understand how LearnFlow authenticates your account using email verification, JWT access tokens, and secure session management."
+---
+
+LearnFlow uses email-and-password authentication to keep your account secure. After you log in, LearnFlow receives a short-lived access token that is automatically managed by the platform — you never need to handle tokens manually. Your session refreshes silently in the background while you're active, so you can focus on learning without interruption.
+
+## Authentication flows
+
+LearnFlow provides four authentication flows that cover every stage of your account lifecycle:
+
+<Steps>
+  <Step title="Registration & Email Verification">
+    Create your account with an email address and password. LearnFlow sends a verification email to confirm your identity before your account is activated.
+  </Step>
+  <Step title="Login">
+    Sign in with your verified email and password to access your dashboard, enrolled courses, and learning progress.
+  </Step>
+  <Step title="Session Management">
+    LearnFlow keeps you logged in automatically. Your session refreshes silently while you're active, and expires safely after a period of inactivity.
+  </Step>
+  <Step title="Password Reset">
+    Forgot your password? Reset it yourself using your registered email address — no need to contact support.
+  </Step>
+</Steps>
+
+## Get started
+
+<CardGroup cols={2}>
+  <Card title="Registration" icon="user-plus" href="/auth/registration">
+    Create your LearnFlow account and verify your email address.
+  </Card>
+  <Card title="Login" icon="arrow-right-to-bracket" href="/auth/login">
+    Sign in to access your courses and dashboard.
+  </Card>
+  <Card title="Sessions" icon="shield-check" href="/auth/sessions">
+    Learn how your session works and how to log out securely.
+  </Card>
+  <Card title="Password Reset" icon="key" href="/auth/password-reset">
+    Recover access to your account with a secure reset link.
+  </Card>
+</CardGroup>
+
+<Note>
+  If you're integrating with the LearnFlow API directly, see the API Reference for authentication headers and token usage.
+</Note>

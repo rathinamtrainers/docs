@@ -1,30 +1,11 @@
 {
-  "$schema": "https://mintlify.com/docs.json",
+  "projectType": "saas",
+  "projectName": "LearnFlow LMS",
+  "projectDescription": "LearnFlow is a Learning Management System (LMS) that enables learners to register, enrol in courses, and track their progress through a secure, personalised dashboard.",
   "theme": "almond",
-  "name": "LearnFlow LMS",
-  "colors": {
-    "primary": "#e81f21",
-    "light": "#222120",
-    "dark": "#e5d3d2"
-  },
-  "favicon": "https://media.brand.dev/a4280e66-b699-4c85-bc16-59e356ff5566.png",
-  "logo": {
-    "light": "https://media.brand.dev/c262cf6f-bfc9-456e-8381-7de834f68593.png",
-    "dark": "https://media.brand.dev/c262cf6f-bfc9-456e-8381-7de834f68593.png"
-  },
-  "navbar": {
-    "links": [
-      {
-        "label": "Support",
-        "href": "mailto:support@learnflow.io"
-      }
-    ],
-    "primary": {
-      "type": "button",
-      "label": "Sign Up Free",
-      "href": "https://app.learnflow.io/register"
-    }
-  },
+  "primaryColor": "#e81f21",
+  "lightColor": "#222120",
+  "darkColor": "#e5d3d2",
   "navigation": {
     "tabs": [
       {
@@ -88,7 +69,23 @@
       }
     ]
   },
-  "footer": {
-    "socials": {}
-  }
+  "keyFeatures": [
+    "Learner self-registration with email verification",
+    "Secure email/password login with JWT access tokens",
+    "Refresh token rotation for seamless session management",
+    "Self-service password reset via email link",
+    "Brute-force protection with automatic account lockout",
+    "Server-side token revocation on logout and password reset",
+    "Role-based access (learner, instructor, admin)",
+    "DPDPA 2023 and GDPR-aligned PII handling"
+  ],
+  "publicApiSurface": [
+    "POST /auth/register",
+    "GET /auth/verify-email?token=",
+    "POST /auth/login",
+    "POST /auth/refresh",
+    "POST /auth/logout",
+    "POST /auth/password-reset/request",
+    "POST /auth/password-reset/confirm"
+  ]
 }

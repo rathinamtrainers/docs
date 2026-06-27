@@ -1,0 +1,83 @@
+---
+title: "POST /auth/login — Authenticate and Get Tokens"
+sidebarTitle: "POST /auth/login"
+description: "POST /auth/login — Authenticates a learner with email and password, returning a JWT access token and a refresh token."
+---
+
+Authenticate with your LearnFlow credentials to receive an access token and a refresh token. The access token authorises subsequent API requests; the refresh token lets you obtain a new access token when the current one expires.
+
+**Endpoint**
+
+```
+POST https://api.learnflow.io/auth/login
+```
+
+**Authentication:** None required.
+
+---
+
+## Request body
+
+<ParamField body="email" type="string" required>
+  Your registered email address.
+</ParamField>
+
+<ParamField body="password" type="string" required>
+  Your account password.
+</ParamField>
+
+### Request example
+
+```http
+POST /auth/login HTTP/1.1
+Host: api.learnflow.io
+Content-Type: application/json
+
+{
+  "email": "learner@example.com",
+  "password": "SecurePass1!"
+}
+```
+
+---
+
+## Response: 200 OK
+
+<ResponseField name="access_token" type="string">
+  A JWT access token. Valid for 15 minutes. Include this in the `Authorization: Bearer` header on subsequent API requests.
+</ResponseField>
+
+<ResponseField name="refresh_token" type="string">
+  An opaque refresh token. Valid for 7 days. Use this to obtain new access tokens via `POST /auth/refresh` when your current access token expires.
+</ResponseField>
+
+<ResponseField name="token_type" type="string">
+  Always `"bearer"`.
+</ResponseField>
+
+### Response example
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyLXV1aWQiLCJyb2xlIjoibGVhcm5lciIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxNzAwMDAwOTAwfQ.signature",
+  "refresh_token": "dGhpcyBpcyBhIHJlZnJlc2ggdG9rZW4",
+  "token_type": "bearer"
+}
+```
+
+---
+
+## Error responses
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| `401` | `"Invalid email or password."` | Credentials are incorrect or the account does not exist |
+| `403` | `"Your email address has not been verified."` | Account is pending email verification |
+| `403` | `"This account has been deactivated."` | Account has been deactivated |
+| `429` | `"Account temporarily locked. Try again in X minutes."` | 5 or more failed attempts within a 10-minute window |
+
+---
+
+<Note>
+  Error messages deliberately do not distinguish between a wrong email and a wrong password to prevent account enumeration.
+</Note>

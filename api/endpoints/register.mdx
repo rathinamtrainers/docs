@@ -1,0 +1,66 @@
+---
+title: "POST /auth/register — Create a New Account"
+sidebarTitle: "POST /auth/register"
+description: "POST /auth/register — Creates a new learner account and sends a verification email. Requires a valid email and a strong password."
+---
+
+Use this endpoint to create a new LearnFlow learner account. After successful registration, an email is sent to the provided address containing a verification link valid for 24 hours. The account cannot be used to log in until the email is verified.
+
+**Endpoint**
+
+```
+POST https://api.learnflow.io/auth/register
+```
+
+**Authentication:** None required.
+
+---
+
+## Request body
+
+<ParamField body="email" type="string" required>
+  The learner's email address. Must be a valid email format and not already registered.
+</ParamField>
+
+<ParamField body="password" type="string" required>
+  Must be at least 8 characters and contain at least one uppercase letter, one digit, and one special character. Must not match the email address or be a commonly used password.
+</ParamField>
+
+### Request example
+
+```http
+POST /auth/register HTTP/1.1
+Host: api.learnflow.io
+Content-Type: application/json
+
+{
+  "email": "learner@example.com",
+  "password": "SecurePass1!"
+}
+```
+
+---
+
+## Response: 201 Created
+
+<ResponseField name="message" type="string">
+  Confirmation message. Value: `"Registration successful. Please check your email to verify your account."`
+</ResponseField>
+
+### Response example
+
+```json
+{
+  "message": "Registration successful. Please check your email to verify your account."
+}
+```
+
+---
+
+## Error responses
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| `409` | `"An account with this email already exists."` | Email is already registered to an active account |
+| `409` | `"This email is already registered but not yet verified."` | Email is registered but the account is still pending verification |
+| `422` | Field-level validation errors | Password too weak, invalid email format, or password equals email |

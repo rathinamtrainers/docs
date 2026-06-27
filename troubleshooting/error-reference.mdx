@@ -1,0 +1,91 @@
+---
+title: "LearnFlow API Error Code Reference"
+sidebarTitle: "Error Reference"
+description: "Complete reference of HTTP error codes returned by the LearnFlow API, with causes and recommended actions for each."
+---
+
+When using the LearnFlow API or when something goes wrong on the platform, LearnFlow returns standard HTTP status codes alongside a descriptive message. This reference lists every error code you may encounter and what to do about it.
+
+<Note>
+  The LearnFlow dashboard displays user-friendly messages. This reference is most useful when building integrations with the LearnFlow API.
+</Note>
+
+---
+
+## 400 Bad Request
+
+A `400` response means the request was understood but cannot be processed because of a problem with the data you submitted — most commonly a token that is expired, already used, or no longer valid.
+
+| Error Message | When it occurs | What to do |
+|---|---|---|
+| `"This verification link has already been used."` | You clicked an email verification link that was already successfully used | Log in — your account is already active |
+| `"This link is invalid or has expired."` | The verification or reset token has expired (over 24 hours old) or is malformed | Request a new verification or reset link from the login page |
+| `"This password reset link has expired."` | The reset token is older than 1 hour | Go back to the login page and request a new password reset |
+| `"This link is no longer valid. A newer reset link has been sent."` | You requested a second password reset before using the first — the earlier link is now superseded | Use the link in the most recent reset email |
+
+---
+
+## 401 Unauthorized
+
+A `401` response means LearnFlow could not authenticate you. This can happen due to wrong credentials, an expired session, or a session that was ended remotely (for example, after a password reset).
+
+| Error Message | When it occurs | What to do |
+|---|---|---|
+| `"Invalid email or password."` | You entered incorrect credentials at login | Double-check your email and password; use the password reset flow if you've forgotten your password |
+| `"Access token has expired."` | Your JWT access token has expired — the platform normally refreshes this silently | Log out and log in again to start a fresh session |
+| `"Your session has been invalidated."` | Your password was reset, which automatically ended all existing sessions | Log in again with your new password |
+| `"Session has ended."` | You explicitly logged out, or your session token was revoked | Log in again |
+| `"Your session has expired."` | Your refresh token has expired after a long period of inactivity (tokens last 7 days) | Log in again to start a new session |
+
+---
+
+## 403 Forbidden
+
+A `403` response means LearnFlow identified you but you are not permitted to proceed in your account's current state.
+
+| Error Message | When it occurs | What to do |
+|---|---|---|
+| `"Your email address has not been verified."` | You are trying to log in before clicking the verification link sent at registration | Check your inbox (and spam folder) for the verification email; use the **"Resend Verification Email"** link on the login page if needed |
+| `"This account has been deactivated."` | Your account has been deactivated | Contact LearnFlow support at support@learnflow.io for assistance |
+
+---
+
+## 409 Conflict
+
+A `409` response means there is a conflict between your request and the current state of the platform — typically when you try to register with an email address that is already in use.
+
+| Error Message | When it occurs | What to do |
+|---|---|---|
+| `"An account with this email already exists."` | You are trying to register with an email address that belongs to an active account | Go to the login page and log in instead; use **"Forgot Password?"** if you don't remember your password |
+| `"This email is already registered but not yet verified."` | You are trying to register again with an email address that is awaiting verification | Check your inbox for the original verification email; use **"Resend Verification Email"** on the login page if you need a new link |
+
+---
+
+## 422 Unprocessable Entity
+
+A `422` response means your request was well-formed but the data you provided does not meet LearnFlow's requirements — for example, a password that doesn't satisfy the complexity rules.
+
+| Error Message | When it occurs | What to do |
+|---|---|---|
+| `"Password must be at least 8 characters."` | The password you entered is fewer than 8 characters | Choose a longer password |
+| `"Password must contain at least one uppercase letter."` / `"...one digit."` / `"...one special character."` | Your password is missing one or more required character types | Update your password to include an uppercase letter, a number, and a special character (e.g. `!`, `@`, `#`) |
+| `"This password is too commonly used. Please choose a different one."` | Your password appears on a list of commonly used or compromised passwords | Choose a more unique password that isn't a common word or pattern |
+| `"Enter a valid email address."` | The email address you entered is not in a valid format | Check for typos and make sure your email follows the format `name@domain.com` |
+| `"Your password cannot be the same as your email address."` | You entered your email address as your password | Choose a different password that is not your email address |
+| `"Your new password must be different from your current password."` | During a password reset, you entered the same password you already use | Choose a new password you haven't used before |
+
+---
+
+## 429 Too Many Requests
+
+A `429` response means you have exceeded a rate limit. On LearnFlow, this most commonly occurs after repeated failed login attempts.
+
+| Error Message | When it occurs | What to do |
+|---|---|---|
+| `"Account temporarily locked. Try again in X minutes."` | You (or someone else) made 5 or more failed login attempts within a 10-minute window | Wait for the number of minutes shown in the message, then try again — or reset your password immediately to unlock your account right away |
+
+---
+
+<Tip>
+  Always read the `message` field in the API response body — it contains specific guidance on what went wrong and how to proceed.
+</Tip>

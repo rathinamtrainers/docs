@@ -1,0 +1,53 @@
+---
+title: "Log In to Your LearnFlow Account"
+sidebarTitle: "Login"
+description: "Sign in to LearnFlow with your verified email and password. Understand session tokens, login failures, and account lockout behaviour."
+---
+
+Signing in to LearnFlow is straightforward — submit your email address and password, and LearnFlow takes care of the rest. Once you're logged in, your session is managed automatically so you can move between courses and features without being repeatedly asked to sign in.
+
+<Note>
+  Your email address must be verified before you can log in. If you haven't verified it yet, check your inbox for the verification email or use the **Resend verification email** link on the login page. See [Registration](/auth/registration) for details.
+</Note>
+
+## Logging in
+
+<Steps>
+  <Step title="Go to the login page">
+    Navigate to the LearnFlow login page at your organisation's LearnFlow URL.
+  </Step>
+  <Step title="Enter your credentials">
+    Type your registered email address and password into the fields provided.
+  </Step>
+  <Step title="Click Sign In">
+    Click the **Sign In** button. If your credentials are correct and your account is active, you'll be taken straight to your dashboard.
+  </Step>
+</Steps>
+
+## Your session
+
+After you log in, LearnFlow manages your session automatically:
+
+- LearnFlow keeps you signed in while you're actively using the platform.
+- Your session refreshes silently in the background — you won't be interrupted with login prompts mid-course.
+- If you're inactive for an extended period, LearnFlow will ask you to log in again to protect your account.
+
+For more detail on how sessions work and how to end one securely, see [Sessions](/auth/sessions).
+
+## Account lockout
+
+<Warning>
+  After **5 failed login attempts within 10 minutes**, your account is temporarily locked for **15 minutes**.
+
+  - LearnFlow sends an alert email to your registered address when this happens.
+  - You can wait 15 minutes for the lockout to lift, or **reset your password** to unlock your account immediately — see [Password Reset](/auth/password-reset).
+</Warning>
+
+## Login errors
+
+| Error message | HTTP status | What it means | What to do |
+|---|---|---|---|
+| "Invalid email or password." | 401 | Your email or password is incorrect. | Check both fields and try again. If you've forgotten your password, use [Password Reset](/auth/password-reset). |
+| "Your email address has not been verified." | 403 | Your account exists but hasn't been activated yet. | Check your inbox for the verification email, or use the **Resend verification email** link. |
+| "Account temporarily locked. Try again in 15 minutes." | 429 | Too many failed login attempts in a short period. | Wait 15 minutes and try again, or [reset your password](/auth/password-reset) to unlock your account immediately. |
+| "This account has been deactivated." | 403 | Your account has been deactivated by an administrator. | Contact LearnFlow support for assistance. |

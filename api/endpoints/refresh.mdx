@@ -1,0 +1,77 @@
+---
+title: "POST /auth/refresh — Refresh Your Access Token"
+sidebarTitle: "POST /auth/refresh"
+description: "POST /auth/refresh — Exchanges a valid refresh token for a new access token and a rotated refresh token. Old refresh token is immediately invalidated."
+---
+
+When your access token expires (after 15 minutes), use this endpoint to get a new one without requiring the user to log in again. Each call rotates the refresh token — you receive a new refresh token and must discard the old one.
+
+**Endpoint**
+
+```
+POST https://api.learnflow.io/auth/refresh
+```
+
+**Authentication:** No additional authentication required. The refresh token itself authenticates the request.
+
+---
+
+## Request body
+
+<ParamField body="refresh_token" type="string" required>
+  The refresh token issued at login or from the previous refresh call.
+</ParamField>
+
+### Request example
+
+```http
+POST /auth/refresh HTTP/1.1
+Host: api.learnflow.io
+Content-Type: application/json
+
+{
+  "refresh_token": "your-current-refresh-token"
+}
+```
+
+---
+
+## Response: 200 OK
+
+<ResponseField name="access_token" type="string">
+  A new JWT access token. Valid for 15 minutes.
+</ResponseField>
+
+<ResponseField name="refresh_token" type="string">
+  A new refresh token. The old refresh token is now invalid. Valid for 7 days.
+</ResponseField>
+
+<ResponseField name="token_type" type="string">
+  Always `"bearer"`.
+</ResponseField>
+
+### Response example
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiJ9.new-claims.new-sig",
+  "refresh_token": "new-rotated-refresh-token-value",
+  "token_type": "bearer"
+}
+```
+
+---
+
+## Error responses
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| `401` | `"Session has ended. Please log in again."` | Refresh token was revoked (for example, after logout) |
+| `401` | `"Your session has expired. Please log in again."` | Refresh token has expired |
+| `401` | `"Unusual activity detected..."` | Refresh token was reused — all sessions have been revoked as a security precaution |
+
+---
+
+<Warning>
+  Store each new refresh token immediately and discard the old one. Reusing an old refresh token triggers a full account session revocation as a security measure.
+</Warning>

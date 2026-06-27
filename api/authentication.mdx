@@ -1,0 +1,96 @@
+---
+title: "Authenticating with the LearnFlow API"
+sidebarTitle: "Authentication"
+description: "Learn how to obtain and use a LearnFlow access token to authenticate API requests using the Authorization: Bearer header."
+---
+
+The LearnFlow API uses JWT Bearer tokens for authentication. You obtain a token by logging in with your credentials, then include it in the `Authorization` header of every subsequent request.
+
+## Step 1 — Obtain an access token
+
+Send your credentials to `POST /auth/login`:
+
+```http
+POST /auth/login HTTP/1.1
+Host: api.learnflow.io
+Content-Type: application/json
+
+{
+  "email": "learner@example.com",
+  "password": "MySecurePassword1!"
+}
+```
+
+A successful login returns an access token, a refresh token, and the token type:
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyLXV1aWQiLCJyb2xlIjoibGVhcm5lciIsImlhdCI6MTcwMDAwMDAwMCwiZXhwIjoxNzAwMDAwOTAwfQ.signature",
+  "refresh_token": "opaque-refresh-token-value",
+  "token_type": "bearer"
+}
+```
+
+## Step 2 — Include the token in requests
+
+Pass the access token as a Bearer token in the `Authorization` header of every API call:
+
+```http
+GET /api/courses HTTP/1.1
+Host: api.learnflow.io
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9...
+```
+
+<Note>
+  Access tokens expire after **15 minutes**. When making API calls from an application, implement token refresh using `POST /auth/refresh`.
+</Note>
+
+## Token expiry and refresh
+
+| Token         | Validity  | Notes                                       |
+| ------------- | --------- | ------------------------------------------- |
+| Access token  | 15 minutes | Issued on every successful login or refresh |
+| Refresh token | 7 days    | Rotated — each use issues a new token       |
+
+- Access tokens are valid for **15 minutes** from the time of issue.
+- When an access token expires, call `POST /auth/refresh` with your refresh token to get a new one.
+- Refresh tokens are valid for **7 days**.
+- Refresh tokens are **rotated** — each refresh issues a new refresh token and invalidates the old one. Reusing an already-rotated token is treated as a security signal and invalidates all active sessions for your account.
+
+Send your current refresh token to `POST /auth/refresh`:
+
+```http
+POST /auth/refresh HTTP/1.1
+Host: api.learnflow.io
+Content-Type: application/json
+
+{
+  "refresh_token": "your-current-refresh-token"
+}
+```
+
+The response returns a fresh token pair:
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiJ9.new-payload.new-signature",
+  "refresh_token": "new-rotated-refresh-token",
+  "token_type": "bearer"
+}
+```
+
+## Authentication errors
+
+| HTTP Status       | Cause                                        | Resolution                              |
+| ----------------- | -------------------------------------------- | --------------------------------------- |
+| 401 Unauthorized  | Missing or invalid `Authorization` header    | Include a valid Bearer token            |
+| 401 Unauthorized  | Access token expired                         | Call `POST /auth/refresh`               |
+| 401 Unauthorized  | Refresh token expired or revoked             | Log in again via `POST /auth/login`     |
+
+<Warning>
+  Never include your access token or refresh token in URL query parameters. Always use the `Authorization` header.
+</Warning>
+
+<Tip>
+  If you're building a web or mobile application, consider storing the refresh token in an `httpOnly` cookie and keeping the access token in memory only.
+</Tip>

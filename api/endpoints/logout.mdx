@@ -1,0 +1,50 @@
+---
+title: "POST /auth/logout — End Your Session"
+sidebarTitle: "POST /auth/logout"
+description: "POST /auth/logout — Revokes the current refresh token and ends your LearnFlow session. Requires a valid Bearer access token."
+---
+
+Call this endpoint to end your LearnFlow session. The current refresh token is immediately revoked on the server, and your access token becomes invalid once its 15-minute lifetime expires. Use this when logging out from a device to ensure your session cannot be reused.
+
+**Endpoint**
+
+```
+POST https://api.learnflow.io/auth/logout
+```
+
+**Authentication:** Bearer token required in the `Authorization` header.
+
+---
+
+## Request example
+
+```http
+POST /auth/logout HTTP/1.1
+Host: api.learnflow.io
+Authorization: Bearer eyJhbGciOiJSUzI1NiJ9...
+Content-Type: application/json
+
+{
+  "refresh_token": "your-current-refresh-token"
+}
+```
+
+---
+
+## Response: 204 No Content
+
+Session ended successfully. No response body is returned.
+
+---
+
+## Error responses
+
+| Status | Cause |
+|--------|-------|
+| `401` | Missing or invalid access token in the `Authorization` header |
+
+---
+
+<Tip>
+  After calling logout, clear the access token from your application's memory and remove the refresh token from storage.
+</Tip>

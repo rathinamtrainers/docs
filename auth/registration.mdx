@@ -1,0 +1,52 @@
+---
+title: "Create Your LearnFlow Account"
+sidebarTitle: "Registration"
+description: "Register for LearnFlow with your email and password. Learn about email verification, password rules, and what happens after sign-up."
+---
+
+Getting started with LearnFlow takes just a few moments. Provide your email address and choose a password, and LearnFlow will send you a verification email to confirm your identity. Once you click the link in that email, your account is active and you're ready to enrol in courses.
+
+## Password requirements
+
+Choose a password that meets all of the following rules:
+
+- At least **8 characters** long
+- At least **one uppercase letter** (A–Z)
+- At least **one digit** (0–9)
+- At least **one special character** (e.g. `!@#$%^&*`)
+- Must **not** be the same as your email address
+- Must **not** be a commonly used or widely known password
+
+## What happens after you register
+
+<Steps>
+  <Step title="Account created — pending verification">
+    LearnFlow creates your account with a "Pending Verification" status. You cannot log in until your email address is verified.
+  </Step>
+  <Step title="Verification email sent">
+    LearnFlow sends a verification email to the address you provided. The link inside is valid for **24 hours**.
+  </Step>
+  <Step title="Click the link in the email">
+    Open the email and click the verification link. This confirms that the email address belongs to you and activates your account.
+  </Step>
+  <Step title="Your account is now active">
+    You're redirected to the login page with a confirmation message. Your account is active — go ahead and log in.
+  </Step>
+</Steps>
+
+<Note>
+  **Didn't receive the verification email?** Check your spam or junk folder first. If it's not there, use the **Resend verification email** link on the login page to get a fresh one.
+</Note>
+
+<Info>
+  Already have an account? Head to [Login](/auth/login) to sign in.
+</Info>
+
+## Common registration errors
+
+| Error | What it means | What to do |
+|---|---|---|
+| **Email already registered** (409) | An active account exists with this email address. | Go to the [login page](/auth/login) to sign in instead. |
+| **Email registered but not verified** (409) | You registered before but never verified your email. | Use the **Resend verification email** link on the login page. |
+| **Password too weak** (422) | Your password doesn't meet one or more complexity rules. | Review the [password requirements](#password-requirements) above and try again. |
+| **Invalid email format** (422) | The email address you entered isn't formatted correctly. | Double-check your email and re-enter it (e.g. `name@example.com`). |

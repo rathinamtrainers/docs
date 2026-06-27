@@ -1,0 +1,103 @@
+---
+title: "LearnFlow REST API Overview"
+sidebarTitle: "Overview"
+description: "Introduction to the LearnFlow REST API: base URL, request format, authentication, response structure, and versioning conventions."
+---
+
+The LearnFlow API is a RESTful HTTP API that gives you programmatic access to LearnFlow's authentication and learning features. All requests and responses use JSON.
+
+## Base URL
+
+All API requests are made to the following base URL:
+
+```
+https://api.learnflow.io
+```
+
+## Request format
+
+Send all request bodies as JSON and set the `Content-Type` header to `application/json`.
+
+```http
+POST /auth/login HTTP/1.1
+Host: api.learnflow.io
+Content-Type: application/json
+
+{
+  "email": "learner@example.com",
+  "password": "MySecurePassword1!"
+}
+```
+
+## Authentication
+
+Most endpoints require a valid JWT Bearer token in the `Authorization` header. Obtain a token by logging in, then attach it to every subsequent request. See [Authentication](/api/authentication) for a step-by-step guide.
+
+## Response format
+
+All responses return JSON.
+
+- **Successful responses** include the requested data directly in the response body.
+- **Error responses** include a `detail` or `message` field that describes the issue.
+
+**Example success response**
+
+```json
+{
+  "access_token": "eyJhbGciOiJSUzI1NiJ9...",
+  "refresh_token": "dGhpcyBpcyBhIHJlZnJlc2gg...",
+  "token_type": "bearer"
+}
+```
+
+**Example error response**
+
+```json
+{
+  "detail": "Invalid email or password."
+}
+```
+
+## HTTP status codes
+
+The LearnFlow API uses standard HTTP status codes across all endpoints.
+
+| Code | Meaning                                          |
+| ---- | ------------------------------------------------ |
+| 200  | Success                                          |
+| 201  | Created                                          |
+| 202  | Accepted (async operation queued)                |
+| 204  | No Content (e.g., successful logout)             |
+| 400  | Bad Request — invalid token or input             |
+| 401  | Unauthorized — invalid or expired token          |
+| 403  | Forbidden — account state prevents action        |
+| 409  | Conflict — resource already exists               |
+| 422  | Unprocessable Entity — validation failure        |
+| 429  | Too Many Requests — rate limited                 |
+
+## Available endpoints
+
+<CardGroup cols={2}>
+  <Card title="Register" href="/api/endpoints/register">
+    Create a new learner account
+  </Card>
+  <Card title="Login" href="/api/endpoints/login">
+    Authenticate and receive a JWT token pair
+  </Card>
+  <Card title="Refresh" href="/api/endpoints/refresh">
+    Rotate your refresh token and get a new access token
+  </Card>
+  <Card title="Logout" href="/api/endpoints/logout">
+    Revoke your current refresh token and end the session
+  </Card>
+  <Card title="Verify Email" href="/api/endpoints/verify-email">
+    Activate your account via the emailed verification link
+  </Card>
+  <Card title="Password Reset" href="/api/endpoints/password-reset">
+    Request or complete a self-service password reset
+  </Card>
+</CardGroup>
+
+<Note>
+  All requests must be made over HTTPS. Plain HTTP connections are rejected.
+</Note>

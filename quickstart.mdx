@@ -1,47 +1,69 @@
 ---
-title: "Quickstart"
-description: "Begin with a guide on the fastest path to a successful outcome"
+title: "Get Started with LearnFlow LMS"
+sidebarTitle: "Quickstart"
+description: "Create your LearnFlow account, verify your email, and log in to access your dashboard and courses in four simple steps."
 ---
 
-Describe how someone begins using your product. What is the first thing they need to do? Are there any prerequisites?
-
-A quickstart should take someone from zero to using your product. They'll get a quick win and a sense of what they can accomplish.
-
-## Prerequisites
-
-Before you begin, you must have:
-
-- Requirement one (for example, Node.js 18+, a free account, an API key)
-- Requirement two (for example, a compatible device, a compatible browser, a compatible operating system)
-
-## Get started
+This guide walks you through everything you need to go from a brand-new visitor to an active learner on LearnFlow. By the end you will have a verified account, an active session, and a clear view of how to find and enrol in your first course.
 
 <Steps>
-  <Step title="Install">
-    Describe how to install your product or sign up.
+  <Step title="Create Your Account">
+    Navigate to the [Registration page](/auth/registration) and fill in your details to create your LearnFlow account.
 
-    ```bash
-    npm install your-package
-    ```
+    Provide your email address and choose a strong password that meets the following requirements:
+
+    - At least **8 characters** long
+    - Contains at least one **uppercase letter** (A–Z)
+    - Contains at least one **digit** (0–9)
+    - Contains at least one **special character** (e.g. `!`, `@`, `#`, `$`)
+
+    <Tip>
+      Pick a password you have not used elsewhere. LearnFlow stores your password as a secure hash and never exposes it, but using a unique password adds an extra layer of protection for your account.
+    </Tip>
+
+    Once you submit the form, LearnFlow creates your account and immediately sends a verification email to the address you provided.
   </Step>
-  <Step title="Configure">
-    Describe any setup or configuration needed before first use.
 
-    ```bash
-    your-cli init
-    ```
+  <Step title="Verify Your Email">
+    Open your inbox and look for an email from LearnFlow with the subject **"Verify your email address"**. The verification link inside is valid for **24 hours**.
+
+    Click the link to activate your account. You will be redirected to LearnFlow and shown a confirmation that your email address has been verified.
+
+    <Note>
+      Didn't receive the email? Check your spam or junk folder first. If it is not there, use the **Resend Verification Email** link on the login page to request a fresh link.
+    </Note>
   </Step>
-  <Step title="Run it">
-    Show the first thing a user does to see it working.
 
-    ```bash
-    your-cli start
-    ```
+  <Step title="Log In">
+    Go to the [Login page](/auth/login), enter your verified email address and password, then click **Sign In**.
+
+    On success, LearnFlow issues you a JWT access token and redirects you to your personalised learner dashboard. Your session lasts **15 minutes** and refreshes silently in the background as long as you remain active — so you will not be interrupted mid-course.
+
+    <Info>
+      If you enter an incorrect password multiple times, LearnFlow will temporarily lock your account to protect it against brute-force attacks. Wait a few minutes, then try again or use the password reset flow.
+    </Info>
+  </Step>
+
+  <Step title="Explore Your Dashboard">
+    Your dashboard is your learning home base. From here you can:
+
+    - **Browse available courses** — search and filter the full course catalogue to find topics that interest you.
+    - **Track your enrolments** — see every course you have enrolled in, along with its current status.
+    - **View your learning progress** — monitor completion percentages and pick up exactly where you left off.
+
+    Select any course card to open its detail page, then click **Enrol** to add it to your learning plan and begin your first lesson.
   </Step>
 </Steps>
 
-<Tip>
-  Give people a way to get help. This could be a link to a support page, a chat with a customer support agent, or a forum for your product.
+<CardGroup cols={2}>
+  <Card title="Register" icon="user-plus" href="/auth/registration">
+    Ready to sign up? Head to the registration page and create your account now.
+  </Card>
+  <Card title="Log In" icon="right-to-bracket" href="/auth/login">
+    Already have an account? Sign in to reach your learner dashboard.
+  </Card>
+</CardGroup>
 
-  Example: Need help? Reach out to us at [support@yourcompany.com](mailto:support@yourcompany.com).
+<Tip>
+  Keep your login email accessible — LearnFlow uses it for account verification and password resets. If you ever lose access to that address, contact support before changing it.
 </Tip>

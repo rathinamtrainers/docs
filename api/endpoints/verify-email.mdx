@@ -1,0 +1,51 @@
+---
+title: "GET /auth/verify-email — Verify Your Email Address"
+sidebarTitle: "GET /auth/verify-email"
+description: "GET /auth/verify-email — Activates a learner account using the token sent via email. Token is single-use and valid for 24 hours."
+---
+
+This endpoint is called when a learner clicks the verification link in the registration email. It activates the account so the learner can log in. The token is valid for 24 hours and can only be used once.
+
+**Endpoint**
+
+```
+GET https://api.learnflow.io/auth/verify-email?token={token}
+```
+
+**Authentication:** None required.
+
+---
+
+## Query parameters
+
+<ParamField query="token" type="string" required>
+  The verification token from the email link.
+</ParamField>
+
+### Request example
+
+```http
+GET /auth/verify-email?token=abc123verificationtoken HTTP/1.1
+Host: api.learnflow.io
+```
+
+---
+
+## Response: 200 OK
+
+Account activated. The learner is redirected to the login page with a success banner.
+
+---
+
+## Error responses
+
+| Status | Message | Cause |
+|--------|---------|-------|
+| `400` | `"This verification link has already been used."` | Token was already consumed |
+| `400` | `"This link is invalid or has expired."` | Token has expired or is malformed |
+
+---
+
+<Note>
+  This endpoint is typically called from the browser via the verification link, not directly from API clients.
+</Note>
