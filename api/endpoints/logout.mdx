@@ -1,14 +1,14 @@
 ---
-title: "POST /auth/logout — End Your Session"
+title: "POST /auth/logout — Revoke Your Session and Log Out"
 sidebarTitle: "POST /auth/logout"
-description: "POST /auth/logout — Revokes the current refresh token and ends your LearnFlow session. Requires a valid Bearer access token."
+description: "POST /auth/logout — Revokes the current refresh token server-side, ending your LearnFlow session. Requires a valid Bearer access token."
 ---
 
 Call this endpoint to end your LearnFlow session. The current refresh token is immediately revoked on the server, and your access token becomes invalid once its 15-minute lifetime expires. Use this when logging out from a device to ensure your session cannot be reused.
 
 **Endpoint**
 
-```
+```text
 POST https://api.learnflow.io/auth/logout
 ```
 

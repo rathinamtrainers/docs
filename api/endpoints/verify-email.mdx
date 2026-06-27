@@ -8,7 +8,7 @@ This endpoint is called when a learner clicks the verification link in the regis
 
 **Endpoint**
 
-```
+```text
 GET https://api.learnflow.io/auth/verify-email?token={token}
 ```
 
@@ -41,7 +41,7 @@ Account activated. The learner is redirected to the login page with a success ba
 
 | Status | Message | Cause |
 |--------|---------|-------|
-| `400` | `"This verification link has already been used."` | Token was already consumed |
+| `400` | `"This verification link has already been used. If your account is active, please log in."` | Token was already consumed |
 | `400` | `"This link is invalid or has expired."` | Token has expired or is malformed |
 
 ---

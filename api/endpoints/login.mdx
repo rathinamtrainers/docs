@@ -1,14 +1,14 @@
 ---
-title: "POST /auth/login — Authenticate and Get Tokens"
+title: "POST /auth/login — Authenticate and Receive Tokens"
 sidebarTitle: "POST /auth/login"
-description: "POST /auth/login — Authenticates a learner with email and password, returning a JWT access token and a refresh token."
+description: "POST /auth/login — Authenticates a learner with email and password, and returns a JWT access token, a refresh token, and token type."
 ---
 
 Authenticate with your LearnFlow credentials to receive an access token and a refresh token. The access token authorises subsequent API requests; the refresh token lets you obtain a new access token when the current one expires.
 
 **Endpoint**
 
-```
+```text
 POST https://api.learnflow.io/auth/login
 ```
 

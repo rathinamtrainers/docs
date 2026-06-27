@@ -1,5 +1,5 @@
 ---
-title: "Understanding LearnFlow Access Tokens"
+title: "LearnFlow Access Tokens: Expiry, Refresh, and Security"
 sidebarTitle: "Token Management"
 description: "Learn how LearnFlow uses access tokens to authorise API requests, how sessions refresh automatically, and when tokens become invalid."
 ---
@@ -45,7 +45,7 @@ Your access token becomes invalid in any of the following situations:
 - You **explicitly log out** of LearnFlow.
 - You **reset your password** — this immediately revokes all tokens associated with your account across every device.
 - LearnFlow **detects suspicious session activity** (such as a reused refresh token), causing all tokens for your account to be revoked and a security alert email to be sent to you.
-- Your **session has been idle beyond the inactivity threshold**, causing your refresh token to expire naturally.
+- Your **refresh token has expired** — refresh tokens are valid for **7 days** from the time of issue. After that, you must log in again to start a new session.
 
 ## Security warning
 
